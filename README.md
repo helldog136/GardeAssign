@@ -1,5 +1,5 @@
-# ULBStageMedServicePicker
-Python helper to choose nicely the service for students in medicine at ULB (Affectation problem solved using SCIP)
+# GardeAssign
+Python helper to choose nicely the guards for students in medicine at ULB (Affectation problem solved using SCIP)
 
 You need to have obtained a licence for SCIP (https://www.scipopt.org/index.php#download) and installed it. 
 You also need to have "scip" command added to your PATH.
@@ -12,26 +12,23 @@ To run it simply launch:
 
 input csv file must have the following structure:
 
-First line: List of all Possible services (first column skipped)
+First line: "Places,[number of students to assign per day]"
 
-Second line: Maximum number of students per service (first column skipped)
+Second line: "Dates,[List of dates where you want to assign students]"
 
-All next lines: Student Name, preferences being in a range of 1-n 1 being the most preferred service. 
+Third line: "Day,[S/W S=weekday, W=weekend]"
 
-Empty values are considered as "least preferred"
-
-preferences can be unique (e.g. only one of each number) or multiple (e.g. same preference level for two services)
+All next lines: "Student Name, [empty if the student doesn't want to go at this date, any text otherwise]"
 
 For an example of input file see provided input.csv
 
 ## How it works:
 This program creates a function to minimize by SCIP. 
-Each variable X_i_j represents the potential affectation of the student i to the service j. Each variable is binary.
+Each variable X_i_j represents the potential affectation of the student i to the guard j. Each variable is binary.
 
-The variables are subject to constraints (student only affected once and no more student per service than available places in the service)
+The variables are subject to constraints (each day has X students (from config),...)
 
-The function accounts the preferences of the students by affecting a "weight" to each variable. 
-The more the student wants the service, the more the affectation will minimize the value of the function. 
+The function tries to balance the number of guards per student and between weekday and weekend day.
 The rest is magic from SCIP. 
 
 SCIP will find the optimal value for each X_i_j (1 or 0). 
