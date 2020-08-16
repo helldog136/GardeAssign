@@ -30,7 +30,7 @@ if __name__ == "__main__":
         args = check_args(args)
         ext = "." + args[1].split(".")[-1]
 
-        problem = reader.parse(args[2], args[1])
+        problem = reader.parse(args[1])
 
         if problem is None:
             print("Unknown file format:", args[1].split(".")[-1])

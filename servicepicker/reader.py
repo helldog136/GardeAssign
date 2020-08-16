@@ -1,19 +1,14 @@
 from servicepicker.problem import Problem, getStrongConstraints, getWeakConstraints
 
 
-def parse(concordances, filename):
+def parse(filename):
     nbPlaces = 0
     dates = []
     candidates = []
     students = []
     days = []
-    concordance = {}
     placesLine = True
     datesLine = True
-    with open(concordances) as cf:
-        for line in cf:
-            splittedLine = line.strip().split(',')
-            concordance[splittedLine[0]] = splittedLine[1]
     with open(filename) as f:
         for line in f:
             splittedLine = line.strip().split(',')
@@ -31,7 +26,7 @@ def parse(concordances, filename):
                 for i, v in enumerate(splittedLine[1:]):
                     if v != "":
                         candidates[i].append(student)
-    return Problem(dates, nbPlaces, students, candidates, concordance, getStrongConstraints(), getWeakConstraints())
+    return Problem(dates, nbPlaces, students, candidates, getStrongConstraints(), getWeakConstraints())
 
 if __name__ == "__main__":
     print(parse("input.csv").write())
