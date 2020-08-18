@@ -1,4 +1,6 @@
+# -*- coding: utf-8 -*-
 #!/usr/bin/env python3
+
 import sys
 import servicepicker.problem.constraint as constraint
 import os

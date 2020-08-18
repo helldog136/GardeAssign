@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from servicepicker.problem import Problem, getStrongConstraints, getWeakConstraints
 
 
@@ -6,10 +8,9 @@ def parse(filename):
     dates = []
     candidates = []
     students = []
-    days = []
     placesLine = True
     datesLine = True
-    with open(filename) as f:
+    with open(filename, encoding="utf-8") as f:
         for line in f:
             splittedLine = line.strip().split(',')
             if placesLine:

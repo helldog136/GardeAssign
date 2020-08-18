@@ -62,7 +62,8 @@ class StudentOncePerDay(StrongConstraint):
 @strongConstraint
 class AccountPreferences(StrongConstraint):
     def computeConstraint(self, problem):
-        # for each date look at preference. if no one has put a preference, allow anyone else prevent others to being assigned
+        # for each date look at preference. if no one has put a preference, allow anyone
+        # else prevent others to being assigned
         res = []
         res1 = []
         for j in range(len(problem.L)):
@@ -70,12 +71,13 @@ class AccountPreferences(StrongConstraint):
             res1.append([])
         for j in range(len(problem.L)):
             candidates = problem.getCandidatesForDate(j)
-            if len(candidates) > 2: # add vetos. Case 1 is handled in weak Account Prefs
+            print("candidtes"+problem.L[j] + str(candidates))
+            if len(candidates) < 2: # add vetos. Case 1 is handled in weak Account Prefs
                 for i in range(len(problem.S)):
                     if problem.S[i] not in candidates:
                         for k in range(problem.M):
                             res[j].append((1, problem.prettyPrintVar("x", i, j, k)))
-            elif len(candidates) == 1:
+            if len(candidates) == 1:
                 res1[j].append((1, problem.prettyPrintVar("x", problem.S.index(candidates[0]), j, 0)))
         res = filter(lambda i: len(i) > 0, res)
         res1 = filter(lambda i: len(i) > 0, res1)
@@ -157,7 +159,7 @@ class EqStudents(StrongConstraint):
 
 
 @strongConstraint
-class EqStudents(StrongConstraint):
+class NoSuccessiveDates(StrongConstraint):
     def computeConstraint(self, problem):
         # sum_ik xijk <= 1
         res = []
